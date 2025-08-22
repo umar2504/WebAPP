@@ -4,145 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neon Chat WebApp</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* Общие стили */
-body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background: url('https://img3.akspic.ru/previews/6/8/3/1/8/181386/181386-svet-fototapet-stena-sinij-krasnyj_cvet-550x310.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #fff;
-}
-
-.chat-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    overflow-y: auto;
-    gap: 10px;
-    backdrop-filter: blur(6px);
-    scroll-behavior: smooth;
-}
-
-/* Сообщения */
-.message {
-    max-width: 70%;
-    padding: 12px 18px;
-    border-radius: 20px;
-    word-wrap: break-word;
-    animation: fadeIn 0.3s;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 16px;
-}
-
-.user-message {
-    align-self: flex-end;
-    background-color: rgba(0,255,128,0.5);
-    box-shadow: 0 0 10px #00ff80, 0 0 20px #00ff80 inset;
-}
-
-.bot-message {
-    align-self: flex-start;
-    background-color: rgba(0,128,255,0.5);
-    box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff inset;
-}
-
-/* Аватары */
-.avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    background-size: cover;
-}
-
-/* Фотографии */
-.message img {
-    max-width: 200px;
-    max-height: 200px;
-    border-radius: 15px;
-}
-
-/* Анимация появления */
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(10px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-
-/* Ввод сообщений */
-.input-container {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: rgba(0,0,0,0.7);
-    box-shadow: 0 -2px 10px #00ffff55;
-    backdrop-filter: blur(6px);
-    gap: 10px;
-}
-
-.input-container input[type="text"] {
-    flex: 1;
-    padding: 12px 18px;
-    border-radius: 25px;
-    border: 2px solid #00ffff;
-    outline: none;
-    font-size: 16px;
-    background: rgba(0,0,0,0.5);
-    color: #fff;
-}
-
-.input-container input[type="text"]:focus {
-    border-color: #ff00ff;
-}
-
-.input-container button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 25px;
-    background: linear-gradient(45deg, #00ffff, #ff00ff);
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.input-container button:hover {
-    transform: scale(1.05);
-}
-
-/* Скрепка */
-.input-container label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: rgba(0,255,255,0.3);
-    cursor: pointer;
-}
-
-.input-container label svg {
-    width: 20px;
-    height: 20px;
-    fill: #fff;
-}
-
-#photo { display: none; }
-
-@media (max-width: 600px) {
-    .message { max-width: 90%; font-size: 14px; padding: 10px 14px; }
-    .input-container input[type="text"] { font-size: 14px; padding: 10px 14px; }
-    .input-container button { font-size: 14px; padding: 10px 14px; }
-}
+/* Стили неона, адаптивность и чат */
+body { margin:0; font-family:Roboto,sans-serif; background:#111; color:#fff; display:flex; flex-direction:column; height:100vh; }
+.chat-container { flex:1; padding:10px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; }
+.message { max-width:70%; padding:12px 18px; border-radius:20px; display:flex; gap:10px; }
+.user-message { align-self:flex-end; background:rgba(0,255,128,0.5); box-shadow:0 0 10px #0f0,0 0 20px #0f0 inset; }
+.bot-message { align-self:flex-start; background:rgba(0,128,255,0.5); box-shadow:0 0 10px #0af,0 0 20px #0af inset; }
+.avatar { width:36px;height:36px;border-radius:50%;flex-shrink:0;background-size:cover; }
+.message img { max-width:200px; max-height:200px; border-radius:15px; }
+.input-container { display:flex; padding:10px; gap:10px; background:rgba(0,0,0,0.7); }
+.input-container input[type="text"] { flex:1; padding:12px 18px; border-radius:25px; border:2px solid #0ff; background:rgba(0,0,0,0.5); color:#fff; }
+.input-container button { padding:12px 20px; border:none; border-radius:25px; background:linear-gradient(45deg,#0ff,#f0f); color:#fff; cursor:pointer; }
+.input-container button:hover { transform:scale(1.05); }
+label { display:flex; align-items:center; justify-content:center; width:42px;height:42px;border-radius:50%; background:rgba(0,255,255,0.3); cursor:pointer; }
+#photo { display:none; }
 </style>
 </head>
 <body>
@@ -151,14 +27,8 @@ body {
 
 <div class="input-container">
     <input type="text" id="message" placeholder="Напишите сообщение...">
-    
-    <label for="photo">
-        <svg viewBox="0 0 24 24">
-            <path d="M21.44 11.05L12.94 1.56C11.86 0.48 10.07 0.48 8.99 1.56 7.91 2.64 7.91 4.43 8.99 5.51l7.78 7.78c0.78 0.78 0.78 2.05 0 2.83-0.78 0.78-2.05 0.78-2.83 0L6.34 5.34c-1.17-1.17-3.07-1.17-4.24 0-1.17 1.17-1.17 3.07 0 4.24l9.5 9.5c2.34 2.34 6.14 2.34 8.48 0 2.34-2.34 2.34-6.14 0-8.48z"/>
-        </svg>
-    </label>
+    <label for="photo">📎</label>
     <input type="file" id="photo">
-    
     <button onclick="sendMessage()">Отправить</button>
 </div>
 
@@ -166,68 +36,32 @@ body {
 const tg = window.Telegram.WebApp;
 const chat = document.getElementById("chat");
 
-// Функция добавления сообщений в чат
-function addMessage(text, isUser=true, img=null) {
-    const div = document.createElement("div");
-    div.classList.add("message");
-    div.classList.add(isUser ? "user-message" : "bot-message");
-
-    // Аватар
-    const avatar = document.createElement("div");
+function addMessage(text, isUser=true, img=null){
+    const div=document.createElement("div");
+    div.classList.add("message",isUser?"user-message":"bot-message");
+    const avatar=document.createElement("div");
     avatar.classList.add("avatar");
-    avatar.style.backgroundImage = isUser 
-        ? "url('https://i.pravatar.cc/36?img=3')" 
-        : "url('https://i.pravatar.cc/36?img=5')";
-    
+    avatar.style.backgroundImage=isUser?"url('https://i.pravatar.cc/36?img=3')":"url('https://i.pravatar.cc/36?img=5')";
     div.appendChild(avatar);
-
-    const content = document.createElement("div");
-    if(img){
-        const image = document.createElement("img");
-        image.src = img;
-        content.appendChild(image);
-        if(text) {
-            const p = document.createElement("p");
-            p.textContent = text;
-            content.appendChild(p);
-        }
-    } else {
-        content.textContent = text;
-    }
+    const content=document.createElement("div");
+    if(img){ const image=document.createElement("img"); image.src=img; content.appendChild(image); if(text){const p=document.createElement("p"); p.textContent=text; content.appendChild(p);} } 
+    else{content.textContent=text;}
     div.appendChild(content);
     chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
+    chat.scrollTop=chat.scrollHeight;
 }
 
-// Отправка сообщений
-function sendMessage() {
-    const messageInput = document.getElementById("message");
-    const photoInput = document.getElementById("photo");
-
-    if(messageInput.value) {
-        addMessage(messageInput.value, true);
-        tg.sendData(JSON.stringify({ type: "text", message: messageInput.value }));
-        messageInput.value = "";
-    }
-
-    if(photoInput.files.length > 0) {
-        const reader = new FileReader();
-        reader.onload = () => {
-            addMessage("", true, reader.result);
-            tg.sendData(JSON.stringify({ type: "photo", photo: reader.result }));
-            photoInput.value = "";
-        };
+function sendMessage(){
+    const messageInput=document.getElementById("message");
+    const photoInput=document.getElementById("photo");
+    if(messageInput.value){ addMessage(messageInput.value,true); tg.sendData(JSON.stringify({type:"text",message:messageInput.value})); messageInput.value=""; }
+    if(photoInput.files.length>0){
+        const reader=new FileReader();
+        reader.onload=()=>{ addMessage("",true,reader.result); tg.sendData(JSON.stringify({type:"photo",photo:reader.result})); photoInput.value=""; }
         reader.readAsDataURL(photoInput.files[0]);
     }
 }
-
-// Для примера: AI отвечает прямо в Web App
-// Эмуляция ответа через 1-2 секунды
-tg.onEvent('mainButtonClicked', () => {
-    addMessage("Привет! Я бот отвечаю прямо в WebApp.", false);
-});
-
 </script>
+
 </body>
 </html>
-
